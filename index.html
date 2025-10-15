@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Jeu de Mathématiques</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <div class="version-badge" id="versionBadge">v0.0.0</div>
+        <h1>🧮 Jeu de Maths ! 🧮</h1>
+        
+        <div class="login-section">
+            <div class="login-form">
+                <select class="username-select hidden" id="usernameSelect">
+                    <option value="">-- Utilisateurs existants --</option>
+                </select>
+                <input type="text" id="usernameInput" placeholder="Crée ton profil ou choisis ci-dessus..." maxlength="20">
+                <button class="btn" id="loginBtn">Se connecter</button>
+                <button class="sound-btn" id="soundBtn" title="Activer/Désactiver les sons">🔊</button>
+                <div class="user-info hidden" id="userInfo">
+                    <span>Connecté en tant que : <strong id="currentUser"></strong></span>
+                    <button class="btn-small" id="logoutBtn">Déconnexion</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-buttons">
+                <label for="categorySelect" class="category-label">Catégorie :</label>
+                <select class="category-select" id="categorySelect">
+                    <option value="toutes">📦 Toutes</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="question-section">
+            <div class="question-display" id="questionDisplay">
+                Quelle est la réponse à la question ?
+            </div>
+        </div>
+
+        <div class="answer-container" id="answerContainer">
+            <!-- Les options de réponse seront générées dynamiquement ici -->
+        </div>
+
+        <div class="feedback" id="feedback">
+            Réponds à la question ! 💭
+        </div>
+    </div>
+
+    <!-- Données -->
+    <script src="js/data.js"></script>
+    <script src="js/categories.js"></script>
+    
+    <!-- Modules de gestion -->
+    <script src="js/userManager.js"></script>
+    <script src="js/soundManager.js"></script>
+    <script src="js/uiManager.js"></script>
+    <script src="js/questionManager.js"></script>
+    <script src="js/inputHandler.js"></script>
+    
+    <!-- Jeu principal -->
+    <script src="js/game.js"></script>
+</body>
+</html>
