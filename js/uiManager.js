@@ -152,6 +152,77 @@ class UIManager {
         }, 3000);
     }
     
+    // Créer l'animation de célébration pour une catégorie complétée
+    createCategoryCompletionCelebration(categoryIcon, categoryName, encouragementMessage) {
+        // Conteneur principal
+        const celebration = document.createElement('div');
+        celebration.className = 'category-celebration';
+        celebration.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            text-align: center;
+            animation: bounceIn 0.6s ease;
+        `;
+        
+        // Médaille dorée
+        const medal = document.createElement('div');
+        medal.style.cssText = `
+            font-size: 120px;
+            animation: rotateMedal 1s ease infinite;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        `;
+        medal.textContent = '🥇';
+        
+        // Icône de la catégorie
+        const icon = document.createElement('div');
+        icon.style.cssText = `
+            font-size: 60px;
+            margin-bottom: 10px;
+        `;
+        icon.textContent = categoryIcon;
+        
+        // Message d'encouragement
+        const message = document.createElement('div');
+        message.style.cssText = `
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            font-size: 18px;
+            font-weight: bold;
+            color: #667eea;
+            max-width: 400px;
+        `;
+        message.textContent = encouragementMessage;
+        
+        // Assembler
+        celebration.appendChild(medal);
+        celebration.appendChild(icon);
+        celebration.appendChild(message);
+        document.body.appendChild(celebration);
+        
+        // Confettis
+        for (let i = 0; i < 60; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.backgroundColor = ['#ffd700', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4'][Math.floor(Math.random() * 5)];
+            celebration.appendChild(confetti);
+        }
+        
+        // Retirer après 4 secondes
+        setTimeout(() => {
+            if (celebration.parentNode) {
+                document.body.removeChild(celebration);
+            }
+        }, 4000);
+    }
+    
     // Afficher/masquer les sections selon l'état de connexion
     updateVisibilityForLogin(isLoggedIn) {
         if (isLoggedIn) {

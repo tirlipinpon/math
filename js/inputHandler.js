@@ -70,9 +70,13 @@ class InputHandler {
             this.game.ui.showFeedback('🎉 BRAVO ! Bonne réponse ! 🎉', 'success');
             this.game.ui.createCelebration();
             
-            // Sauvegarder la progression
-            if (this.game.userManager.isLoggedIn()) {
+            // Sauvegarder la progression UNIQUEMENT si aucune erreur n'a été faite
+            if (this.game.userManager.isLoggedIn() && this.wrongAnswersCount === 0) {
                 this.game.userManager.addQuestionAnswered(this.game.currentQuestionId);
+                console.log('✅ Question enregistrée comme répondue (réponse correcte du premier coup)');
+            } else if (this.game.userManager.isLoggedIn() && this.wrongAnswersCount > 0) {
+                console.log(`⚠️ Question NON enregistrée (${this.wrongAnswersCount} erreur(s) avant la bonne réponse)`);
+                this.game.ui.showFeedback('🎉 BRAVO ! Mais la question reviendra car tu as fait des erreurs ! 💪', 'success');
             }
             
             // Passer à la question suivante après 2.5 secondes
@@ -103,14 +107,14 @@ class InputHandler {
                 if (element.id === 'answerInput') {
                     element.value = '';
                     element.focus();
+                    
+                    // Afficher le bouton "Aide" après 1 erreur (UNIQUEMENT pour questions libres)
+                    if (this.wrongAnswersCount === 1) {
+                        this.showHelpButton();
+                    }
                 }
                 
-                // Afficher le bouton "Aide" après 1 erreur (toujours, même pour QCM)
-                if (this.wrongAnswersCount === 1) {
-                    this.showHelpButton();
-                }
-                
-                // Afficher le bouton "Passer" après 2 erreurs (toujours, même pour QCM)
+                // Afficher le bouton "Passer" après 2 erreurs (pour tous les types)
                 if (this.wrongAnswersCount >= 2) {
                     this.showSkipButton();
                 }

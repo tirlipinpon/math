@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 3.1.1
-const GAME_VERSION = '3.1.1';
+// Version: 3.2.1
+const GAME_VERSION = '3.2.1';
 
 class MathGame {
     constructor() {
@@ -62,16 +62,14 @@ class MathGame {
         // Si la catégorie est complétée (mais pas le jeu entier)
         if (result.categoryCompleted) {
             console.log(`🎉 Catégorie ${this.currentCategory} complétée !`);
-            const categoryName = getCategoryName(this.currentCategory);
-            this.ui.showFeedback(`🎉 Toutes les questions ${categoryName} répondues !`, 'success');
-            this.soundManager.play('wordFound');
+            this.handleCategoryCompleted(this.currentCategory);
             
             // Retour automatique à "Toutes"
             setTimeout(() => {
                 this.currentCategory = 'toutes';
                 this.updateCategorySelect();
                 this.loadQuestion();
-            }, 2000);
+            }, 4000);
             return;
         }
         
@@ -140,20 +138,13 @@ class MathGame {
     // Mettre à jour la liste déroulante des catégories
     updateCategorySelect() {
         const select = document.getElementById('categorySelect');
-        if (!select || typeof getAvailableCategories !== 'function') return;
+        if (!select || typeof CATEGORIES === 'undefined') return;
         
-        // Obtenir les catégories disponibles (avec questions restantes seulement)
-        const availableCategories = getAvailableCategories(GAME_DATA, this.userManager);
-        
-        // Si la catégorie actuelle n'est plus disponible, revenir à "toutes"
-        if (!availableCategories.includes(this.currentCategory)) {
-            this.currentCategory = 'toutes';
-        }
-        
-        // Vider et repeupler
+        // Vider et repeupler avec TOUTES les catégories
         select.innerHTML = '';
         
-        availableCategories.forEach(categoryKey => {
+        CATEGORIES.forEach(category => {
+            const categoryKey = category.key;
             const option = document.createElement('option');
             option.value = categoryKey;
             
@@ -161,9 +152,19 @@ class MathGame {
                 // Pour "toutes", pas de compteur
                 option.textContent = getCategoryName(categoryKey);
             } else {
-                // Pour les autres catégories, afficher le nombre de questions restantes
+                // Pour les autres catégories
                 const counts = getFoundAndTotalCount(categoryKey, GAME_DATA, this.userManager);
-                option.textContent = `${getCategoryName(categoryKey)} (${counts.remaining})`;
+                
+                if (counts.remaining === 0 && this.userManager.isLoggedIn()) {
+                    // Catégorie complétée : afficher check et désactiver
+                    option.textContent = `${getCategoryName(categoryKey)} ✓`;
+                    option.disabled = true;
+                    option.style.color = '#10b981';
+                    option.style.fontWeight = 'bold';
+                } else {
+                    // Catégorie non complétée : afficher le nombre restant
+                    option.textContent = `${getCategoryName(categoryKey)} (${counts.remaining})`;
+                }
             }
             
             if (categoryKey === this.currentCategory) {
@@ -173,7 +174,7 @@ class MathGame {
             select.appendChild(option);
         });
         
-        console.log(`🗂️ Catégories disponibles: ${availableCategories.length} (questions restantes affichées)`);
+        console.log(`🗂️ Toutes les catégories affichées (complétées marquées ✓)`);
     }
     
     // Activer/Désactiver les sons
@@ -308,6 +309,36 @@ class MathGame {
         }
     }
 
+    // Gérer la complétion d'une catégorie
+    handleCategoryCompleted(categoryKey) {
+        const category = getCategoryByKey(categoryKey);
+        const categoryName = category ? category.name : categoryKey;
+        const categoryIcon = category ? category.icon : '🏆';
+        
+        // Compter les catégories restantes
+        const allCategories = CATEGORIES.filter(cat => cat.key !== 'toutes');
+        let completedCount = 0;
+        
+        allCategories.forEach(cat => {
+            const counts = getFoundAndTotalCount(cat.key, GAME_DATA, this.userManager);
+            if (counts.remaining === 0) {
+                completedCount++;
+            }
+        });
+        
+        const remainingCategories = allCategories.length - completedCount;
+        
+        // Message de félicitations
+        const message = `🏆 BRAVO ! Catégorie ${categoryName} TERMINÉE ! 🏆`;
+        const encouragement = remainingCategories > 0 
+            ? `Continue comme ça ! Il te reste ${remainingCategories} catégorie${remainingCategories > 1 ? 's' : ''} à compléter ! 💪`
+            : `Tu es un CHAMPION ! Toutes les catégories sont complètes ! 👑`;
+        
+        this.ui.showFeedback(message, 'success');
+        this.ui.createCategoryCompletionCelebration(categoryIcon, categoryName, encouragement);
+        this.soundManager.play('wordFound');
+    }
+    
     // Gérer la complétion du jeu
     handleGameCompleted() {
         this.ui.showFeedback(`🏆 FÉLICITATIONS ! Tu as répondu à TOUTES les questions ! 🏆 Tu es un CHAMPION en mathématiques ! 👑`, 'success');
