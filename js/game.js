@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 3.1.0
-const GAME_VERSION = '3.1.0';
+// Version: 3.1.1
+const GAME_VERSION = '3.1.1';
 
 class MathGame {
     constructor() {
@@ -47,6 +47,9 @@ class MathGame {
     }
 
     loadQuestion() {
+        // Réinitialiser l'InputHandler pour la nouvelle question
+        this.inputHandler.reset();
+        
         const result = this.questionManager.selectRandomQuestion(this.userManager, this.currentCategory);
         
         // Si toutes les questions sont complétées

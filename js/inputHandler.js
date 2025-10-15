@@ -103,16 +103,16 @@ class InputHandler {
                 if (element.id === 'answerInput') {
                     element.value = '';
                     element.focus();
-                    
-                    // Afficher le bouton "Aide" après 1 erreur
-                    if (this.wrongAnswersCount === 1) {
-                        this.showHelpButton();
-                    }
-                    
-                    // Afficher le bouton "Passer" après 2 erreurs
-                    if (this.wrongAnswersCount >= 2) {
-                        this.showSkipButton();
-                    }
+                }
+                
+                // Afficher le bouton "Aide" après 1 erreur (toujours, même pour QCM)
+                if (this.wrongAnswersCount === 1) {
+                    this.showHelpButton();
+                }
+                
+                // Afficher le bouton "Passer" après 2 erreurs (toujours, même pour QCM)
+                if (this.wrongAnswersCount >= 2) {
+                    this.showSkipButton();
                 }
             }, 1500);
         }
