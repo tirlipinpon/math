@@ -56,7 +56,7 @@ class UIManager {
         } else if (questionType === 'libre') {
             // Créer un champ de saisie
             const input = document.createElement('input');
-            input.type = 'text';
+            input.type = 'number';
             input.id = 'answerInput';
             input.className = 'answer-input';
             input.placeholder = 'Tape ta réponse...';

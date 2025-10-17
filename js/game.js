@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 3.2.1
-const GAME_VERSION = '3.2.1';
+// Version: 3.2.2
+const GAME_VERSION = '3.2.2';
 
 class MathGame {
     constructor() {
