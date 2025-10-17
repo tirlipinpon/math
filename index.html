@@ -7,7 +7,15 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>🎮 Jeu de Mathématiques</title>
+    <script>
+        // Cache busting - Générer un timestamp unique pour forcer le rechargement
+        const CACHE_BUST = Date.now();
+    </script>
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        // Appliquer le cache bust au CSS aussi
+        document.querySelector('link[rel="stylesheet"]').href += `?v=${CACHE_BUST}`;
+    </script>
 </head>
 <body>
     <div class="game-container">
@@ -54,18 +62,26 @@
         </div>
     </div>
 
-    <!-- Données -->
-    <script src="js/data.js"></script>
-    <script src="js/categories.js"></script>
-    
-    <!-- Modules de gestion -->
-    <script src="js/userManager.js"></script>
-    <script src="js/soundManager.js"></script>
-    <script src="js/uiManager.js"></script>
-    <script src="js/questionManager.js"></script>
-    <script src="js/inputHandler.js"></script>
-    
-    <!-- Jeu principal -->
-    <script src="js/game.js"></script>
+    <!-- Chargement dynamique des scripts avec cache busting -->
+    <script>
+        // Liste des scripts à charger dans l'ordre
+        const scripts = [
+            'js/data.js',
+            'js/categories.js',
+            'js/userManager.js',
+            'js/soundManager.js',
+            'js/uiManager.js',
+            'js/questionManager.js',
+            'js/inputHandler.js',
+            'js/game.js'
+        ];
+        
+        // Charger les scripts avec le cache bust
+        scripts.forEach(src => {
+            const script = document.createElement('script');
+            script.src = `${src}?v=${CACHE_BUST}`;
+            document.write(script.outerHTML);
+        });
+    </script>
 </body>
 </html>
