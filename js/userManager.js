@@ -3,6 +3,7 @@ class UserManager {
     constructor() {
         this.currentUser = null;
         this.questionsAnswered = [];
+        this.dynamicCalculationsSuccess = []; // Signatures des calculs dynamiques réussis
         
         // Préfixe unique pour éviter les conflits avec d'autres applications
         this.COOKIE_PREFIX = 'math_game_';
@@ -29,6 +30,7 @@ class UserManager {
     logout() {
         this.currentUser = null;
         this.questionsAnswered = [];
+        this.dynamicCalculationsSuccess = [];
     }
 
     // Charger les données utilisateur depuis les cookies
@@ -57,6 +59,18 @@ class UserManager {
         } else {
             console.log('ℹ️ Aucune question sauvegardée pour cet utilisateur');
         }
+        
+        // Charger les calculs dynamiques réussis
+        const dynamicCalcsCookie = this.getCookie(`${this.COOKIE_PREFIX}dynamicCalcs_${this.currentUser}`);
+        if (dynamicCalcsCookie) {
+            try {
+                const loaded = JSON.parse(dynamicCalcsCookie);
+                this.dynamicCalculationsSuccess = [...new Set(loaded)];
+                console.log(`✨ Calculs dynamiques réussis: ${this.dynamicCalculationsSuccess.length}/20`);
+            } catch (e) {
+                console.error('❌ Erreur lors du chargement des calculs dynamiques:', e);
+            }
+        }
     }
 
     // Sauvegarder les données utilisateur
@@ -68,6 +82,9 @@ class UserManager {
 
         // Sauvegarder les questions répondues
         this.setCookie(`${this.COOKIE_PREFIX}questionsAnswered_${this.currentUser}`, JSON.stringify(this.questionsAnswered), 365);
+        
+        // Sauvegarder les calculs dynamiques réussis
+        this.setCookie(`${this.COOKIE_PREFIX}dynamicCalcs_${this.currentUser}`, JSON.stringify(this.dynamicCalculationsSuccess), 365);
         
         console.log('✅ Sauvegarde terminée');
     }
@@ -133,9 +150,46 @@ class UserManager {
         console.log('🗑️ Réinitialisation complète des données pour:', this.currentUser);
         
         this.questionsAnswered = [];
+        this.dynamicCalculationsSuccess = [];
         this.saveUserData();
         
         console.log('✅ Toutes les données ont été réinitialisées');
+    }
+    
+    // ===== GESTION DES CALCULS DYNAMIQUES =====
+    
+    // Ajouter un calcul dynamique réussi (signature)
+    addDynamicCalculationSuccess(signature) {
+        if (!this.currentUser) return;
+        
+        if (!this.dynamicCalculationsSuccess.includes(signature)) {
+            console.log(`✨ Ajout du calcul réussi: "${signature}"`);
+            this.dynamicCalculationsSuccess.push(signature);
+            console.log(`📊 Calculs dynamiques réussis: ${this.dynamicCalculationsSuccess.length}/20`);
+            this.saveUserData();
+        } else {
+            console.log(`⚠️ Calcul "${signature}" déjà réussi`);
+        }
+    }
+    
+    // Obtenir les calculs dynamiques réussis
+    getDynamicCalculationsSuccess() {
+        return this.dynamicCalculationsSuccess || [];
+    }
+    
+    // Obtenir le nombre de calculs dynamiques réussis
+    getDynamicSuccessCount() {
+        return this.dynamicCalculationsSuccess.length;
+    }
+    
+    // Vérifier si un calcul a déjà été réussi
+    isDynamicCalculationSuccess(signature) {
+        return this.dynamicCalculationsSuccess.includes(signature);
+    }
+    
+    // Vérifier si la catégorie dynamique est complète (20/20)
+    isDynamicCategoryComplete() {
+        return this.dynamicCalculationsSuccess.length >= 20;
     }
 
     // Vérifier si un utilisateur est connecté

@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 3.2.4
-const GAME_VERSION = '3.2.4';
+// Version: 3.3.2
+const GAME_VERSION = '3.3.2';
 
 class MathGame {
     constructor() {
@@ -9,18 +9,32 @@ class MathGame {
         console.log(`%c📅 ${new Date().toLocaleString('fr-FR')}`, 'color: #10b981; font-size: 12px;');
         console.log('');
         
+        // Initialiser le userManager en premier pour pouvoir charger les préférences
+        this.userManager = new UserManager();
+        
+        // Générer les questions dynamiques et les fusionner avec GAME_DATA
+        const dynamicGenerator = new DynamicQuestionGenerator();
+        const excludeSignatures = [];
+        const dynamicQuestions = dynamicGenerator.generateQuestionSet(20, excludeSignatures);
+        
+        // Fusionner les questions statiques et dynamiques
+        this.allGameData = { ...GAME_DATA, ...dynamicQuestions };
+        
         // Afficher la quantité de questions
-        const totalCount = Object.keys(GAME_DATA).length;
+        const staticCount = Object.keys(GAME_DATA).length;
+        const dynamicCount = Object.keys(dynamicQuestions).length;
+        const totalCount = Object.keys(this.allGameData).length;
         
         console.log(`%c📊 Statistiques des questions :`, 'color: #f59e0b; font-weight: bold;');
+        console.log(`   📚 Statiques : ${staticCount} questions`);
+        console.log(`   ✨ Dynamiques : ${dynamicCount} questions`);
         console.log(`   📈 TOTAL : ${totalCount} questions disponibles`);
         console.log('');
         
         // Initialiser les gestionnaires
         this.ui = new UIManager();
         this.soundManager = new SoundManager();
-        this.questionManager = new QuestionManager(GAME_DATA);
-        this.userManager = new UserManager();
+        this.questionManager = new QuestionManager(this.allGameData);
         this.inputHandler = new InputHandler(this);
         
         // État du jeu
@@ -78,6 +92,13 @@ class MathGame {
         
         console.log(`%c🎯 QUESTION ACTUELLE: "${this.currentQuestionId}"`, 'color: #f59e0b; font-size: 14px; font-weight: bold; background: #fef3c7; padding: 4px 8px; border-radius: 4px;');
         console.log(`📝 Type: ${questionData.type} | 🗂️ Catégorie: ${this.currentCategory}`);
+        console.log(`%c✅ RÉPONSE: ${questionData.answer}`, 'color: #10b981; font-size: 16px; font-weight: bold; background: #d1fae5; padding: 6px 12px; border-radius: 4px; border: 2px solid #10b981;');
+        
+        // Afficher la signature si c'est une question dynamique
+        if (questionData.isDynamic && questionData.signature) {
+            console.log(`✨ Signature: "${questionData.signature}"`);
+        }
+        
         console.log('');
         
         // Afficher la question
@@ -153,7 +174,7 @@ class MathGame {
                 option.textContent = getCategoryName(categoryKey);
             } else {
                 // Pour les autres catégories
-                const counts = getFoundAndTotalCount(categoryKey, GAME_DATA, this.userManager);
+                const counts = getFoundAndTotalCount(categoryKey, this.allGameData, this.userManager);
                 
                 if (counts.remaining === 0 && this.userManager.isLoggedIn()) {
                     // Catégorie complétée : afficher check et désactiver

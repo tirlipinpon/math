@@ -72,8 +72,18 @@ class InputHandler {
             
             // Sauvegarder la progression UNIQUEMENT si aucune erreur n'a été faite
             if (this.game.userManager.isLoggedIn() && this.wrongAnswersCount === 0) {
-                this.game.userManager.addQuestionAnswered(this.game.currentQuestionId);
-                console.log('✅ Question enregistrée comme répondue (réponse correcte du premier coup)');
+                const questionData = this.game.questionManager.getQuestionData(this.game.currentQuestionId);
+                
+                // Vérifier si c'est une question dynamique
+                if (questionData.isDynamic && questionData.signature) {
+                    // Pour les questions dynamiques, sauvegarder la signature
+                    this.game.userManager.addDynamicCalculationSuccess(questionData.signature);
+                    console.log(`✅ Calcul dynamique "${questionData.signature}" enregistré comme réussi`);
+                } else {
+                    // Pour les questions normales, sauvegarder l'ID
+                    this.game.userManager.addQuestionAnswered(this.game.currentQuestionId);
+                    console.log('✅ Question enregistrée comme répondue (réponse correcte du premier coup)');
+                }
             } else if (this.game.userManager.isLoggedIn() && this.wrongAnswersCount > 0) {
                 console.log(`⚠️ Question NON enregistrée (${this.wrongAnswersCount} erreur(s) avant la bonne réponse)`);
                 this.game.ui.showFeedback('🎉 BRAVO ! Mais la question reviendra car tu as fait des erreurs ! 💪', 'success');
@@ -107,11 +117,11 @@ class InputHandler {
                 if (element.id === 'answerInput') {
                     element.value = '';
                     element.focus();
-                    
-                    // Afficher le bouton "Aide" après 1 erreur (UNIQUEMENT pour questions libres)
-                    if (this.wrongAnswersCount === 1) {
-                        this.showHelpButton();
-                    }
+                }
+                
+                // Afficher le bouton "Aide" après 1 erreur (POUR TOUS LES TYPES)
+                if (this.wrongAnswersCount === 1) {
+                    this.showHelpButton();
                 }
                 
                 // Afficher le bouton "Passer" après 2 erreurs (pour tous les types)
@@ -168,11 +178,14 @@ class InputHandler {
             this.game.soundManager.play('hint');
             this.game.ui.showFeedback('Indice affiché ! Utilise-le pour trouver la réponse 🎯', 'info');
             
-            // Remettre le focus sur le champ de réponse
+            // Remettre le focus sur le champ de réponse si c'est une question libre
             const answerInput = document.getElementById('answerInput');
             if (answerInput) {
                 setTimeout(() => answerInput.focus(), 100);
             }
+        } else {
+            // Pas d'indice disponible
+            this.game.ui.showFeedback('⚠️ Pas d\'indice disponible pour cette question', 'warning');
         }
     }
     

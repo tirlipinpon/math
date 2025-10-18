@@ -30,7 +30,21 @@ class QuestionManager {
         
         // Filtrer les questions déjà répondues seulement si l'utilisateur est connecté
         if (userManager.isLoggedIn()) {
+            // Filtrer les questions statiques déjà répondues
             availableQuestions = userManager.getAvailableQuestions(filteredQuestions);
+            
+            // 🔥 Pour la catégorie operations, filtrer aussi les calculs dynamiques déjà réussis
+            if (categoryFilter === 'operations') {
+                const successSignatures = userManager.getDynamicCalculationsSuccess();
+                availableQuestions = availableQuestions.filter(questionId => {
+                    const questionData = this.questions[questionId];
+                    // Si c'est une question dynamique, vérifier si sa signature est déjà réussie
+                    if (questionData && questionData.isDynamic && questionData.signature) {
+                        return !successSignatures.includes(questionData.signature);
+                    }
+                    return true;
+                });
+            }
             
             console.log(`🔍 Sélection question: ${availableQuestions.length}/${filteredQuestions.length} disponibles`);
             

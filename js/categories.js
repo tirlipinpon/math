@@ -110,16 +110,33 @@ function getQuestionCountInCategory(categoryKey, gameData, userManager = null) {
 // Fonction pour compter les questions répondues et le total dans une catégorie
 function getFoundAndTotalCount(categoryKey, gameData, userManager = null) {
     const questionsInCategory = getQuestionsByCategory(categoryKey, gameData);
-    const totalCount = questionsInCategory.length;
+    let totalCount = questionsInCategory.length;
+    let foundInCategory = 0;
     
     // Si pas d'utilisateur connecté, 0 répondu
     if (!userManager || !userManager.isLoggedIn()) {
         return { found: 0, total: totalCount, remaining: totalCount };
     }
     
-    // Compter les questions répondues
-    const questionsAnswered = userManager.getQuestionsAnswered();
-    const foundInCategory = questionsInCategory.filter(questionId => questionsAnswered.includes(questionId)).length;
+    // 🔥 Traitement spécial pour la catégorie "operations" (statiques + dynamiques)
+    if (categoryKey === 'operations') {
+        // Compter les questions statiques réussies (celles qui ne commencent pas par "op_dynamic_")
+        const questionsAnswered = userManager.getQuestionsAnswered();
+        const staticQuestionsInCategory = questionsInCategory.filter(qId => !qId.startsWith('op_dynamic_'));
+        const foundStatic = staticQuestionsInCategory.filter(questionId => questionsAnswered.includes(questionId)).length;
+        
+        // Compter les calculs dynamiques réussis
+        const foundDynamic = userManager.getDynamicSuccessCount();
+        
+        // Total = questions statiques trouvées + calculs dynamiques réussis
+        foundInCategory = foundStatic + foundDynamic;
+        
+        console.log(`📊 Catégorie operations: ${foundStatic} statiques + ${foundDynamic} dynamiques = ${foundInCategory}/${totalCount}`);
+    } else {
+        // Compter les questions répondues normalement
+        const questionsAnswered = userManager.getQuestionsAnswered();
+        foundInCategory = questionsInCategory.filter(questionId => questionsAnswered.includes(questionId)).length;
+    }
     
     return {
         found: foundInCategory,
