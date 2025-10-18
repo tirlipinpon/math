@@ -167,6 +167,12 @@ class InputHandler {
             
             this.game.soundManager.play('hint');
             this.game.ui.showFeedback('Indice affiché ! Utilise-le pour trouver la réponse 🎯', 'info');
+            
+            // Remettre le focus sur le champ de réponse
+            const answerInput = document.getElementById('answerInput');
+            if (answerInput) {
+                setTimeout(() => answerInput.focus(), 100);
+            }
         }
     }
     

@@ -14,6 +14,16 @@ class UIManager {
         }
     }
     
+    // Mélanger aléatoirement un tableau (algorithme de Fisher-Yates)
+    shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+    
     // Mettre en cache les éléments DOM
     cacheDOMElements() {
         this.domElements = {
@@ -45,8 +55,11 @@ class UIManager {
         this.domElements.answerContainer.innerHTML = '';
         
         if (questionType === 'qcm' || questionType === 'vrai-faux') {
+            // Mélanger aléatoirement les options pour éviter la mémorisation de position
+            const shuffledOptions = this.shuffleArray([...options]);
+            
             // Créer des boutons pour chaque option
-            options.forEach((option, index) => {
+            shuffledOptions.forEach((option, index) => {
                 const button = document.createElement('button');
                 button.className = 'answer-option';
                 button.textContent = option;
