@@ -7,6 +7,27 @@ class UserManager {
         
         // Préfixe unique pour éviter les conflits avec d'autres applications
         this.COOKIE_PREFIX = 'math_game_';
+        
+        // 🔐 Intégration du SessionManager pour la persistence de session
+        this.sessionManager = new SessionManager();
+        
+        // 🚀 Auto-restauration de la session au chargement
+        this.restoreSession();
+    }
+    
+    // 🚀 Restaurer la session automatiquement au chargement
+    restoreSession() {
+        if (this.sessionManager.isLoggedIn()) {
+            const username = this.sessionManager.getCurrentUser();
+            console.log(`🔄 Restauration automatique de la session : ${username}`);
+            
+            // Restaurer l'utilisateur dans le UserManager
+            this.currentUser = username;
+            this.loadUserData();
+            
+            return true;
+        }
+        return false;
     }
 
     // Connexion d'un utilisateur
@@ -16,6 +37,10 @@ class UserManager {
         }
 
         this.currentUser = username.trim();
+        
+        // 🔐 Créer une session persistante (survit au refresh)
+        this.sessionManager.login(this.currentUser);
+        
         this.loadUserData();
         
         // Si c'est un nouvel utilisateur (pas de cookie), créer un cookie vide
@@ -28,6 +53,9 @@ class UserManager {
 
     // Déconnexion
     logout() {
+        // 🔐 Déconnexion de la session
+        this.sessionManager.logout();
+        
         this.currentUser = null;
         this.questionsAnswered = [];
         this.dynamicCalculationsSuccess = [];

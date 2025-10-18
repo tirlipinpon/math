@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 4.0.0
-const GAME_VERSION = '4.0.0';
+// Version: 4.1.0
+const GAME_VERSION = '4.1.0';
 
 class MathGame {
     constructor() {
@@ -54,8 +54,16 @@ class MathGame {
     }
 
     initializeGame() {
-        // Ne lancer une question que si l'utilisateur n'est pas connecté
-        if (!this.userManager.isLoggedIn()) {
+        // 🚀 Si une session est restaurée automatiquement, afficher l'UI connectée
+        if (this.userManager.isLoggedIn()) {
+            const username = this.userManager.getCurrentUser();
+            console.log(`✅ Session restaurée : ${username}`);
+            this.ui.setCurrentUser(username);
+            this.updateVisibility();
+            this.populateUserSelect();
+            this.loadQuestion();
+        } else {
+            // Ne lancer une question que si l'utilisateur n'est pas connecté
             this.loadQuestion();
         }
     }
