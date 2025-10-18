@@ -1223,6 +1223,40 @@ h1 {
     }
 }
 
+/* Animations pour le loader AI */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.9;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Styles pour le loader AI */
+.ai-hint-loader {
+    margin: 10px auto;
+    max-width: 300px;
+}
+
+.loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
 /* Media queries pour responsive */
 @media (max-width: 600px) {
     .question-display {

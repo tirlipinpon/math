@@ -3,6 +3,7 @@ class InputHandler {
     constructor(game) {
         this.game = game;
         this.wrongAnswersCount = 0;
+        this.aiHintService = new AIHintService();
         this.setupEventListeners();
     }
     
@@ -145,8 +146,9 @@ class InputHandler {
         helpBtn.className = 'btn help-hint-btn';
         helpBtn.textContent = '💡 Besoin d\'aide ?';
         
-        helpBtn.addEventListener('click', () => {
-            this.showHint();
+        helpBtn.addEventListener('click', async () => {
+            helpBtn.disabled = true; // Désactiver pendant le chargement
+            await this.showHint();
             helpBtn.remove(); // Retirer le bouton après utilisation
         });
         
@@ -154,9 +156,57 @@ class InputHandler {
     }
     
     // Afficher l'indice de la question
-    showHint() {
+    async showHint() {
         const questionData = this.game.questionManager.getQuestionData(this.game.currentQuestionId);
+        const answerContainer = document.getElementById('answerContainer');
         
+        // Si c'est une question dynamique sans hint, utiliser l'IA
+        if (questionData && questionData.isDynamic && !questionData.hint) {
+            console.log('🤖 [AI] Question dynamique détectée, génération de l\'aide par IA...');
+            
+            // Afficher le loader
+            const loader = this.aiHintService.showLoader(answerContainer);
+            
+            // Générer le hint avec l'IA
+            const aiHint = await this.aiHintService.generateHint(questionData);
+            
+            // Masquer le loader
+            this.aiHintService.hideLoader();
+            
+            if (aiHint) {
+                // Afficher le hint généré par l'IA
+                let hintDisplay = document.getElementById('hintDisplay');
+                
+                if (!hintDisplay) {
+                    hintDisplay = document.createElement('div');
+                    hintDisplay.id = 'hintDisplay';
+                    hintDisplay.className = 'hint-display';
+                    
+                    if (answerContainer) {
+                        answerContainer.insertBefore(hintDisplay, answerContainer.firstChild);
+                    }
+                }
+                
+                hintDisplay.textContent = aiHint;
+                hintDisplay.style.animation = 'fadeInBounce 0.5s ease';
+                
+                this.game.soundManager.play('hint');
+                this.game.ui.showFeedback('Indice généré par l\'IA ! 🤖✨', 'info');
+                
+                // Remettre le focus sur le champ de réponse si c'est une question libre
+                const answerInput = document.getElementById('answerInput');
+                if (answerInput) {
+                    setTimeout(() => answerInput.focus(), 100);
+                }
+            } else {
+                // L'IA n'a pas pu générer de hint
+                this.game.ui.showFeedback('⚠️ Aide non disponible pour le moment', 'warning');
+            }
+            
+            return;
+        }
+        
+        // Pour les questions normales avec hint prédéfini
         if (questionData && questionData.hint) {
             // Afficher l'indice dans un élément dédié
             let hintDisplay = document.getElementById('hintDisplay');
@@ -166,7 +216,6 @@ class InputHandler {
                 hintDisplay.id = 'hintDisplay';
                 hintDisplay.className = 'hint-display';
                 
-                const answerContainer = document.getElementById('answerContainer');
                 if (answerContainer) {
                     answerContainer.insertBefore(hintDisplay, answerContainer.firstChild);
                 }
