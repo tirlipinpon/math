@@ -168,7 +168,8 @@ const GAME_DATA = {
         question: "Dans une classe, il y a 15 filles et 13 garçons. Combien y a-t-il d'élèves en tout ?", 
         type: "qcm", 
         answer: "28", 
-        options: ["26", "27", "28", "29"], 
+        options: ["26", "27", "28", "29"],
+        hint: "💡 Pour trouver le total d'élèves, additionne les filles et les garçons", 
         cat: 2 
     },
     "prob_003": { 
@@ -182,14 +183,16 @@ const GAME_DATA = {
         question: "Paul a 24 billes qu'il partage équitablement entre 4 amis. Combien chaque ami reçoit-il de billes ?", 
         type: "qcm", 
         answer: "6", 
-        options: ["4", "5", "6", "8"], 
+        options: ["4", "5", "6", "8"],
+        hint: "💡 Partager équitablement = division. Divise 24 par 4", 
         cat: 2 
     },
     "prob_005": { 
         question: "Si un livre coûte 15€ et que tu as 50€, peux-tu acheter 3 livres ?", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Calcule le coût de 3 livres (15€ chacun) et compare avec 50€", 
         cat: 2 
     },
     "prob_006": { 
@@ -203,7 +206,8 @@ const GAME_DATA = {
         question: "Un train peut transporter 120 personnes. S'il y a déjà 75 personnes, combien de places restent-elles ?", 
         type: "qcm", 
         answer: "45", 
-        options: ["35", "40", "45", "50"], 
+        options: ["35", "40", "45", "50"],
+        hint: "💡 Places restantes = total - places occupées. Soustrais 75 de 120", 
         cat: 2 
     },
     "prob_008": { 
@@ -217,7 +221,8 @@ const GAME_DATA = {
         question: "Un rectangle a une longueur de 8 cm et une largeur de 5 cm. Son périmètre est de 26 cm.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Périmètre d'un rectangle = longueur + largeur + longueur + largeur", 
         cat: 2 
     },
     "prob_010": { 
@@ -231,7 +236,8 @@ const GAME_DATA = {
         question: "Un parking a 3 étages. Chaque étage peut accueillir 45 voitures. Combien de voitures au total ?", 
         type: "qcm", 
         answer: "135", 
-        options: ["120", "125", "135", "145"], 
+        options: ["120", "125", "135", "145"],
+        hint: "💡 Multiplie le nombre d'étages par le nombre de voitures par étage", 
         cat: 2 
     },
     "prob_012": { 
@@ -245,14 +251,16 @@ const GAME_DATA = {
         question: "Un film dure 95 minutes. Il commence à 14h30. Il se termine après 16h00.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Ajoute 95 minutes (= 1h35) à 14h30. Ça donne quelle heure ?", 
         cat: 2 
     },
     "prob_014": { 
         question: "Tom a 48 cartes à partager équitablement entre 6 amis. Combien chacun en reçoit-il ?", 
         type: "qcm", 
         answer: "8", 
-        options: ["6", "7", "8", "9"], 
+        options: ["6", "7", "8", "9"],
+        hint: "💡 Partage = division. Divise 48 par 6 amis", 
         cat: 2 
     },
     "prob_015": { 
@@ -275,14 +283,16 @@ const GAME_DATA = {
         question: "Quel nombre est plus grand : 789 ou 798 ?", 
         type: "qcm", 
         answer: "798", 
-        options: ["789", "798"], 
+        options: ["789", "798"],
+        hint: "💡 Compare chiffre par chiffre : centaines, dizaines, puis unités", 
         cat: 3 
     },
     "nb_003": { 
         question: "Dans le nombre 456, le chiffre 5 représente les dizaines.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Dans 456 : quelle est la position du 5 ? Unités, dizaines ou centaines ?", 
         cat: 3 
     },
     "nb_004": { 
@@ -296,14 +306,16 @@ const GAME_DATA = {
         question: "Quel est le nombre juste avant 100 ?", 
         type: "qcm", 
         answer: "99", 
-        options: ["98", "99", "101", "90"], 
+        options: ["98", "99", "101", "90"],
+        hint: "💡 Compte à rebours : 100 - 1 = ?", 
         cat: 3 
     },
     "nb_006": { 
         question: "345 < 354", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 < signifie 'plus petit que'. Compare 345 et 354", 
         cat: 3 
     },
     "nb_007": { 
@@ -317,14 +329,16 @@ const GAME_DATA = {
         question: "Dans le nombre 2847, quel chiffre est à la position des centaines ?", 
         type: "qcm", 
         answer: "8", 
-        options: ["2", "8", "4", "7"], 
+        options: ["2", "8", "4", "7"],
+        hint: "💡 Dans un nombre : unités, dizaines, centaines, milliers (de droite à gauche)", 
         cat: 3 
     },
     "nb_009": { 
         question: "Le nombre 1000 a 4 chiffres.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Compte les chiffres dans 1000 : combien y en a-t-il ?", 
         cat: 3 
     },
     "nb_010": { 
@@ -338,14 +352,16 @@ const GAME_DATA = {
         question: "Range ces nombres du plus petit au plus grand : 234, 243, 324. Quel est le plus petit ?", 
         type: "qcm", 
         answer: "234", 
-        options: ["234", "243", "324"], 
+        options: ["234", "243", "324"],
+        hint: "💡 Compare les centaines d'abord, puis les dizaines si elles sont égales", 
         cat: 3 
     },
     "nb_012": { 
         question: "5 centaines + 3 dizaines + 7 unités = 537", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 5 centaines = 500, 3 dizaines = 30, 7 unités = 7. Additionne tout", 
         cat: 3 
     },
     "nb_013": { 
@@ -359,14 +375,16 @@ const GAME_DATA = {
         question: "Quel nombre est pair : 47, 52, 63, 71 ?", 
         type: "qcm", 
         answer: "52", 
-        options: ["47", "52", "63", "71"], 
+        options: ["47", "52", "63", "71"],
+        hint: "💡 Un nombre pair se termine par 0, 2, 4, 6 ou 8", 
         cat: 3 
     },
     "nb_015": { 
         question: "Tous les nombres qui se terminent par 5 sont impairs.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Les nombres pairs se terminent par 0, 2, 4, 6, 8. Et les impairs ?", 
         cat: 3 
     },
     "nb_016": { 
@@ -380,21 +398,24 @@ const GAME_DATA = {
         question: "Combien y a-t-il d'unités dans 4 centaines ?", 
         type: "qcm", 
         answer: "400", 
-        options: ["4", "40", "400", "4000"], 
+        options: ["4", "40", "400", "4000"],
+        hint: "💡 1 centaine = 100 unités. Donc 4 centaines = ?", 
         cat: 3 
     },
     "nb_018": { 
         question: "2500 > 2050", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 > signifie 'plus grand que'. Compare 2500 et 2050", 
         cat: 3 
     },
     "nb_019": { 
         question: "Quel nombre arrondi à la dizaine supérieure donne 60 : 54 ou 56 ?", 
         type: "qcm", 
         answer: "56", 
-        options: ["54", "56"], 
+        options: ["54", "56"],
+        hint: "💡 Arrondir à la dizaine supérieure : si ≥5, on monte à 60. Lequel est ≥55 ?", 
         cat: 3 
     },
     "nb_020": { 
@@ -417,14 +438,16 @@ const GAME_DATA = {
         question: "Quelle forme vient ensuite : ⭐🔵⭐🔵⭐ ... ?", 
         type: "qcm", 
         answer: "🔵", 
-        options: ["⭐", "🔵", "🔺", "⬜"], 
+        options: ["⭐", "🔵", "🔺", "⬜"],
+        hint: "💡 Regarde le motif qui se répète : quelle forme suit toujours ⭐ ?", 
         cat: 4 
     },
     "log_003": { 
         question: "Si tous les chats sont des animaux, alors Rex qui est un chat est un animal.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Si tous les chats sont des animaux et que Rex est un chat...", 
         cat: 4 
     },
     "log_004": { 
@@ -438,14 +461,16 @@ const GAME_DATA = {
         question: "Dans une suite 1, 4, 9, 16, ... quel est le nombre suivant ?", 
         type: "qcm", 
         answer: "25", 
-        options: ["20", "21", "24", "25"], 
+        options: ["20", "21", "24", "25"],
+        hint: "💡 Ce sont les carrés : 1×1=1, 2×2=4, 3×3=9, 4×4=16, 5×5=?", 
         cat: 4 
     },
     "log_006": { 
         question: "Si Pierre est plus grand que Paul, et Paul est plus grand que Jacques, alors Pierre est plus grand que Jacques.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 C'est une chaîne logique : Pierre > Paul > Jacques, donc Pierre > ?", 
         cat: 4 
     },
     "log_007": { 
@@ -459,14 +484,16 @@ const GAME_DATA = {
         question: "Un rectangle a 4 côtés. Un carré est un rectangle particulier. Combien de côtés a un carré ?", 
         type: "qcm", 
         answer: "4", 
-        options: ["3", "4", "5", "6"], 
+        options: ["3", "4", "5", "6"],
+        hint: "💡 Si un carré EST un rectangle, il a le même nombre de côtés qu'un rectangle", 
         cat: 4 
     },
     "log_009": { 
         question: "Dans la suite 3, 6, 12, 24, ..., chaque nombre est le double du précédent.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Vérifie : 3×2=6, 6×2=12, 12×2=24. C'est toujours ×2 ?", 
         cat: 4 
     },
     "log_010": { 
@@ -480,14 +507,16 @@ const GAME_DATA = {
         question: "Si A = 1, B = 2, C = 3, quelle est la valeur de D ?", 
         type: "qcm", 
         answer: "4", 
-        options: ["3", "4", "5", "6"], 
+        options: ["3", "4", "5", "6"],
+        hint: "💡 Les lettres suivent l'ordre alphabétique avec +1 à chaque fois", 
         cat: 4 
     },
     "log_012": { 
         question: "Un nombre pair + un nombre pair = toujours un nombre pair.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Teste avec des exemples : 2+4=6, 6+8=14. Ça marche toujours ?", 
         cat: 4 
     },
     "log_013": { 
@@ -501,14 +530,16 @@ const GAME_DATA = {
         question: "Quel est l'intrus : triangle, carré, cercle, cube ?", 
         type: "qcm", 
         answer: "cube", 
-        options: ["triangle", "carré", "cercle", "cube"], 
+        options: ["triangle", "carré", "cercle", "cube"],
+        hint: "💡 Les formes plates (2D) vs les formes avec volume (3D)", 
         cat: 4 
     },
     "log_015": { 
         question: "Si on ajoute un nombre impair à un nombre impair, on obtient toujours un nombre pair.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Teste avec des exemples : 3+5=8, 7+9=16. Que remarques-tu ?", 
         cat: 4 
     },
     "log_016": { 
@@ -522,21 +553,24 @@ const GAME_DATA = {
         question: "Quel nombre complète cette égalité : 7 + ? = 12 - 2 ?", 
         type: "qcm", 
         answer: "3", 
-        options: ["2", "3", "4", "5"], 
+        options: ["2", "3", "4", "5"],
+        hint: "💡 Calcule d'abord 12 - 2, puis trouve ce qu'il faut ajouter à 7", 
         cat: 4 
     },
     "log_018": { 
         question: "Dans un groupe de 5 enfants, si 3 sont des filles, alors 2 sont des garçons.", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Total = 5. Si 3 sont des filles, combien reste-t-il pour les garçons ?", 
         cat: 4 
     },
     "log_019": { 
         question: "Si A > B et B > C, quelle affirmation est vraie ?", 
         type: "qcm", 
         answer: "A > C", 
-        options: ["A < C", "A = C", "A > C", "Impossible à dire"], 
+        options: ["A < C", "A = C", "A > C", "Impossible à dire"],
+        hint: "💡 Logique de comparaison : si A est le plus grand et C le plus petit...", 
         cat: 4 
     },
     "log_020": { 
