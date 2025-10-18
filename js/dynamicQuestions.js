@@ -65,11 +65,25 @@ class DynamicQuestionGenerator {
     const answer = a + b;
     const signature = this.getCalculationSignature('addition', a, b);
     
+    // Générer un hint adapté
+    let hint;
+    if (b <= 10) {
+      hint = `💡 Compte à partir de ${a}, puis ajoute ${b}`;
+    } else {
+      const dizaines = Math.floor(b / 10) * 10;
+      const unites = b % 10;
+      if (unites > 0) {
+        hint = `💡 Décompose : ${a} + ${dizaines} = ${a + dizaines}, puis ajoute ${unites}`;
+      } else {
+        hint = `💡 ${a} + ${dizaines} : ajoute les dizaines`;
+      }
+    }
+    
     return {
       question: `Combien font ${a} + ${b} ?`,
       type: "libre",
       answer: answer.toString(),
-      hint: null, // Sera généré par l'IA plus tard
+      hint: hint,
       cat: 1,
       isDynamic: true,
       operation: 'addition',
@@ -92,11 +106,25 @@ class DynamicQuestionGenerator {
     const answer = a - b;
     const signature = this.getCalculationSignature('soustraction', a, b);
     
+    // Générer un hint adapté
+    let hint;
+    if (b <= 10) {
+      hint = `💡 Pars de ${a} et enlève ${b}`;
+    } else {
+      const dizaines = Math.floor(b / 10) * 10;
+      const unites = b % 10;
+      if (unites > 0) {
+        hint = `💡 Enlève d'abord ${dizaines}, puis encore ${unites} : ${a} - ${dizaines} - ${unites}`;
+      } else {
+        hint = `💡 ${a} - ${dizaines} : enlève les dizaines`;
+      }
+    }
+    
     return {
       question: `Combien font ${a} - ${b} ?`,
       type: "libre",
       answer: answer.toString(),
-      hint: null,
+      hint: hint,
       cat: 1,
       isDynamic: true,
       operation: 'soustraction',
@@ -113,6 +141,16 @@ class DynamicQuestionGenerator {
     const answer = a * b;
     const signature = this.getCalculationSignature('multiplication', a, b);
     
+    // Générer un hint adapté
+    let hint;
+    if (b <= 3) {
+      hint = `💡 C'est ${a} + ${a}${b === 3 ? ` + ${a}` : ''}`;
+    } else if (a === 10 || b === 10) {
+      hint = `💡 Multiplier par 10 : ajoute un zéro !`;
+    } else {
+      hint = `💡 Table de ${a} : ${a} × ${b} = ?`;
+    }
+    
     // Générer des options pour QCM
     const options = this.generateMultipleChoiceOptions(answer, 4, answer * 0.5, answer * 1.5);
     
@@ -121,7 +159,7 @@ class DynamicQuestionGenerator {
       type: "qcm",
       answer: answer.toString(),
       options: options,
-      hint: null,
+      hint: hint,
       cat: 1,
       isDynamic: true,
       operation: 'multiplication',
@@ -138,6 +176,9 @@ class DynamicQuestionGenerator {
     const dividende = diviseur * quotient; // S'assurer que la division tombe juste
     const signature = this.getCalculationSignature('division', dividende, diviseur);
     
+    // Générer un hint adapté
+    const hint = `💡 Combien de fois ${diviseur} dans ${dividende} ? Table de ${diviseur} : ${diviseur} × ? = ${dividende}`;
+    
     // Générer des options pour QCM
     const options = this.generateMultipleChoiceOptions(quotient, 4, 1, quotient + 5);
     
@@ -146,7 +187,7 @@ class DynamicQuestionGenerator {
       type: "qcm",
       answer: quotient.toString(),
       options: options,
-      hint: null,
+      hint: hint,
       cat: 1,
       isDynamic: true,
       operation: 'division',
@@ -175,7 +216,7 @@ class DynamicQuestionGenerator {
           type: "vrai-faux",
           answer: result === correctResult ? "Vrai" : "Faux",
           options: ["Vrai", "Faux"],
-          hint: null,
+          hint: `💡 Calcule ${a} + ${b} et vérifie si ça fait bien ${result}`,
           cat: 1,
           isDynamic: true,
           operation: 'addition',
@@ -193,7 +234,7 @@ class DynamicQuestionGenerator {
           type: "vrai-faux",
           answer: result === correctResult ? "Vrai" : "Faux",
           options: ["Vrai", "Faux"],
-          hint: null,
+          hint: `💡 Calcule ${a} - ${b} et vérifie si ça fait ${result}`,
           cat: 1,
           isDynamic: true,
           operation: 'soustraction',
@@ -211,7 +252,7 @@ class DynamicQuestionGenerator {
           type: "vrai-faux",
           answer: result === correctResult ? "Vrai" : "Faux",
           options: ["Vrai", "Faux"],
-          hint: null,
+          hint: `💡 Table de ${a} : ${a} × ${b}, vérifie le résultat`,
           cat: 1,
           isDynamic: true,
           operation: 'multiplication',

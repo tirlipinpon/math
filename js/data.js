@@ -22,28 +22,32 @@ const GAME_DATA = {
         question: "Combien font 6 × 4 ?", 
         type: "qcm", 
         answer: "24", 
-        options: ["20", "24", "28", "30"], 
+        options: ["20", "24", "28", "30"],
+        hint: "💡 Table de 6 : 6 × 4 = 6 + 6 + 6 + 6", 
         cat: 1 
     },
     "op_004": { 
         question: "Combien font 20 ÷ 5 ?", 
         type: "qcm", 
         answer: "4", 
-        options: ["3", "4", "5", "6"], 
+        options: ["3", "4", "5", "6"],
+        hint: "💡 Combien de fois 5 dans 20 ? 5 × ? = 20", 
         cat: 1 
     },
     "op_005": { 
         question: "8 + 7 = 15", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Calcule 8 + 7 et vérifie si ça fait bien 15", 
         cat: 1 
     },
     "op_006": { 
         question: "15 - 8 = 6", 
         type: "vrai-faux", 
         answer: "Faux", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Calcule 15 - 8 : est-ce que ça fait vraiment 6 ?", 
         cat: 1 
     },
     "op_007": { 
@@ -64,7 +68,8 @@ const GAME_DATA = {
         question: "Combien font 7 × 8 ?", 
         type: "qcm", 
         answer: "56", 
-        options: ["48", "54", "56", "64"], 
+        options: ["48", "54", "56", "64"],
+        hint: "💡 Table de 7 : 7 × 8 = (7 × 4) + (7 × 4) = 28 + 28", 
         cat: 1 
     },
     "op_010": { 
@@ -78,21 +83,24 @@ const GAME_DATA = {
         question: "9 × 6 = 54", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Table de 9 : 9 × 6, vérifie le résultat", 
         cat: 1 
     },
     "op_012": { 
         question: "48 ÷ 8 = 7", 
         type: "vrai-faux", 
         answer: "Faux", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 Table de 8 : 8 × ? = 48. Est-ce 7 ?", 
         cat: 1 
     },
     "op_013": { 
         question: "Combien font 100 - 47 ?", 
         type: "qcm", 
         answer: "53", 
-        options: ["47", "53", "57", "63"], 
+        options: ["47", "53", "57", "63"],
+        hint: "💡 100 - 47 : pense à 100 - 50 = 50, puis ajoute 3", 
         cat: 1 
     },
     "op_014": { 
@@ -113,21 +121,24 @@ const GAME_DATA = {
         question: "Combien font 72 ÷ 9 ?", 
         type: "qcm", 
         answer: "8", 
-        options: ["6", "7", "8", "9"], 
+        options: ["6", "7", "8", "9"],
+        hint: "💡 Table de 9 : 9 × ? = 72", 
         cat: 1 
     },
     "op_017": { 
         question: "125 + 75 = 200", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 125 + 75 : pense à 100 + 100 = 200, vérifie avec 25 + 75", 
         cat: 1 
     },
     "op_018": { 
         question: "200 - 85 = 115", 
         type: "vrai-faux", 
         answer: "Vrai", 
-        options: ["Vrai", "Faux"], 
+        options: ["Vrai", "Faux"],
+        hint: "💡 200 - 85 : enlève 100 d'abord (= 100), puis enlève encore 15 (car 85 = 100 - 15)", 
         cat: 1 
     },
     "op_019": { 

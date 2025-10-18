@@ -1,6 +1,6 @@
 // Jeu principal - Orchestrateur
-// Version: 3.3.2
-const GAME_VERSION = '3.3.2';
+// Version: 3.4.1
+const GAME_VERSION = '3.4.1';
 
 class MathGame {
     constructor() {
@@ -99,6 +99,7 @@ class MathGame {
             console.log(`✨ Signature: "${questionData.signature}"`);
         }
         
+        console.log(`%c💡 Astuce: Tape resetUserData() pour réinitialiser tes données`, 'color: #8b5cf6; font-style: italic;');
         console.log('');
         
         // Afficher la question
